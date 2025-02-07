@@ -7,18 +7,38 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to ApplyTrip</h1>
-        <p>Book Flights, Hotels & Holiday Packages</p>
+    <!-- HEADER -->
+    <header id="main-header">
+        <div class="logo">
+            <img src="logo.png" alt="ApplyTrip Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Flights</a></li>
+                <li><a href="#">Hotels</a></li>
+                <li><a href="#">Holiday Packages</a></li>
+                <li><a href="#">Trains</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <section>
-        <h2>Explore the World with ApplyTrip</h2>
-        <p>Find the best travel deals for your next adventure.</p>
-        <button onclick="alert('Booking Coming Soon!')">Book Now</button>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>Welcome to ApplyTrip</h1>
+        <p>Book Flights, Hotels & Holiday Packages at the Best Prices</p>
+        <button onclick="bookNow()">Book Now</button>
     </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 ApplyTrip. All rights reserved.</p>
+    </footer>
+
+    <!-- WATERMARK LOGO -->
+    <div class="watermark">
+        <img src="logo.png" alt="ApplyTrip Watermark">
+    </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-<link rel="stylesheet" href="style.css">
