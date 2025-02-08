@@ -3,44 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApplyTrip - Travel Booking</title>
-    
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Link to CSS -->
-    <link rel="stylesheet" href="style.css">
+    <title>ApplyTrip - Clone</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .header {
+            background-color: #ff0000;
+            padding: 15px;
+            color: white;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            color: #333;
+            text-decoration: none;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .nav-item:hover {
+            color: #ff0000;
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .search-btn {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .search-btn:hover {
+            background-color: #cc0000;
+        }
+
+        .offer-section {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff7f7;
+            margin: 20px 0;
+        }
+
+        .red-text {
+            color: #ff0000;
+        }
+    </style>
 </head>
 <body>
+    <div class="header">
+        <h1>ApplyTrip</h1>
+    </div>
 
-    <!-- Navigation Menu -->
-    <nav>
-        <ul class="nav-menu">
-            <li><i class="fa-solid fa-plane"></i> Flights</li>
-            <li><i class="fa-solid fa-hotel"></i> Hotels</li>
-            <li><i class="fa-solid fa-house-chimney"></i> Homestays & Villas</li>
-            <li><i class="fa-solid fa-umbrella-beach"></i> Holiday Packages</li>
-            <li><i class="fa-solid fa-train"></i> Trains</li>
-            <li><i class="fa-solid fa-bus"></i> Buses</li>
-            <li><i class="fa-solid fa-taxi"></i> Cabs</li>
-            <li><i class="fa-solid fa-money-bill-wave"></i> Forex Card & Currency</li>
-            <li><i class="fa-solid fa-shield-halved"></i> Travel Insurance</li>
-        </ul>
+    <nav class="nav-container">
+        <a href="#" class="nav-item">Flights</a>
+        <a href="#" class="nav-item">Hotels</a>
+        <a href="#" class="nav-item">Homestays & Villas</a>
+        <a href="#" class="nav-item">Holiday Packages</a>
+        <a href="#" class="nav-item">Trains</a>
+        <a href="#" class="nav-item">Buses</a>
+        <a href="#" class="nav-item">Cabs</a>
+        <a href="#" class="nav-item">Forex</a>
+        <a href="#" class="nav-item">Insurance</a>
     </nav>
 
-    <!-- Main Section -->
-    <header>
-        <h1>Welcome to ApplyTrip</h1>
-        <p>Book Flights, Hotels & Holiday Packages</p>
-    </header>
+    <div class="search-container">
+        <form class="search-form">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="From" value="DEL, Delhi Airport India">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="To" value="BLR, Bengaluru International Airport">
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" placeholder="Departure">
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" placeholder="Return">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Travellers & Class" value="1 Traveller, Economy">
+            </div>
+            <button type="submit" class="search-btn">SEARCH</button>
+        </form>
+    </div>
 
-    <section>
-        <h2>Explore the World with ApplyTrip</h2>
-        <p>Find the best travel deals for your next adventure.</p>
-        <button onclick="alert('Booking Coming Soon!')">Book Now</button>
-    </section>
-
-    <!-- JavaScript File -->
-    <script src="script.js"></script>
+    <div class="offer-section">
+        <h2 class="red-text">EXTRA SAVINGS</h2>
+        <p>Up to $600 off</p>
+        <div class="offers">
+            <span class="red-text">Student Discount</span> | 
+            <span class="red-text">Senior Citizen Discount</span> | 
+            <span class="red-text">Armed Forces Discount</span>
+        </div>
+    </div>
 </body>
-</html>
+</html> 
