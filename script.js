@@ -1,36 +1,39 @@
-const apiToken = "774c580b39b6f5503afcbf57f2249aa2"; // Your Aviasales API Token
+const API_TOKEN = "774c580b39b6f5503afcbf57f2249aa2"; // Your API token
+const PARTNER_ID = "604751"; // Your Partner ID
 
-function searchFlights() {
-    let origin = document.getElementById("origin").value.toUpperCase();
-    let destination = document.getElementById("destination").value.toUpperCase();
+async function searchFlights() {
+    const origin = document.getElementById("origin").value.toUpperCase();
+    const destination = document.getElementById("destination").value.toUpperCase();
+    const departureDate = document.getElementById("departure").value;
+    const travellers = document.getElementById("travellers").value;
 
-    if (origin === "" || destination === "") {
-        alert("Please enter both Origin and Destination airport codes.");
+    if (!origin || !destination || !departureDate) {
+        alert("Please fill in all fields.");
         return;
     }
 
-    let url = `https://api.travelpayouts.com/v1/prices/cheap?origin=${origin}&destination=${destination}&currency=INR&token=${apiToken}`;
+    const apiUrl = `https://api.travelpayouts.com/aviasales/v3/prices_for_dates?origin=${origin}&destination=${destination}&departure_at=${departureDate}&token=${API_TOKEN}`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            let flights = data.data[destination];
-            let flightList = document.getElementById("flight-results");
-            flightList.innerHTML = "<h3>Available Flights</h3>"; // Clear previous results
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
 
-            if (flights) {
-                Object.keys(flights).forEach(key => {
-                    let flight = flights[key];
-                    let flightItem = document.createElement("p");
-                    flightItem.innerHTML = `<strong>Price: ₹${flight.price}</strong> - Airline: ${flight.airline}`;
-                    flightList.appendChild(flightItem);
-                });
-            } else {
-                flightList.innerHTML = "<p>No flights found for this route.</p>";
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching flight data:", error);
-            alert("Failed to fetch flight data. Please try again later.");
-        });
+        if (data.data.length > 0) {
+            displayFlights(data.data);
+        } else {
+            document.getElementById("flight-results").innerHTML = "<p>No flights found.</p>";
+        }
+    } catch (error) {
+        console.error("Error fetching flight data:", error);
+        alert("Failed to fetch flight data. Please try again later.");
+    }
+}
+
+function displayFlights(flights) {
+    let resultsHtml = "<h3>Available Flights</h3><ul>";
+    flights.forEach(flight => {
+        resultsHtml += `<li>Flight: ${flight.origin} → ${flight.destination} | Price: ${flight.price} USD | Date: ${flight.departure_at}</li>`;
+    });
+    resultsHtml += "</ul>";
+    document.getElementById("flight-results").innerHTML = resultsHtml;
 }
