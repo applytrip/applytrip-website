@@ -3,24 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApplyTrip - Clone</title>
-
-    <!-- Travelpayouts Script -->
-    <script data-noptimize="1" data-cfasync="false" data-wpfc-render="false">
-        (function () {
-            var script = document.createElement("script");
-            script.async = 1;
-            script.src = 'https://emrldtp.cc/Mzg3MTY4.js?t=387168';
-            document.head.appendChild(script);
-        })();
-    </script>
+    <title>ApplyTrip - Flight Search</title>
 
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         .header {
@@ -28,20 +18,14 @@
             padding: 15px;
             color: white;
             text-align: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: background 0.3s ease-in-out;
         }
 
         .nav-container {
             display: flex;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
             background-color: #ffffff;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-top: 60px;
         }
 
         .nav-item {
@@ -57,7 +41,7 @@
 
         .search-container {
             max-width: 800px;
-            margin: 80px auto 30px;
+            margin: 30px auto;
             padding: 20px;
             background-color: white;
             border-radius: 8px;
@@ -109,10 +93,15 @@
         .red-text {
             color: #ff0000;
         }
+
+        #flight-results {
+            margin-top: 20px;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="header" id="main-header">
+    <div class="header">
         <h1>ApplyTrip</h1>
     </div>
 
@@ -130,16 +119,13 @@
     <div class="search-container">
         <form class="search-form">
             <div class="form-group">
-                <input type="text" id="origin" class="form-control" placeholder="From (e.g. DEL)">
+                <input type="text" id="origin" class="form-control" placeholder="From (e.g. BLR)">
             </div>
             <div class="form-group">
-                <input type="text" id="destination" class="form-control" placeholder="To (e.g. BLR)">
+                <input type="text" id="destination" class="form-control" placeholder="To (e.g. HYD)">
             </div>
             <div class="form-group">
                 <input type="date" id="departure" class="form-control">
-            </div>
-            <div class="form-group">
-                <input type="date" id="return" class="form-control">
             </div>
             <div class="form-group">
                 <input type="text" id="travellers" class="form-control" placeholder="Travellers & Class" value="1 Traveller, Economy">
@@ -148,15 +134,8 @@
         </form>
     </div>
 
-    <div class="offer-section">
-        <h2 class="red-text">EXTRA SAVINGS</h2>
-        <p>Up to 50% off</p>
-        <div class="offers">
-            <span class="red-text">Student Discount</span> | 
-            <span class="red-text">Senior Citizen Discount</span> | 
-            <span class="red-text">Armed Forces Discount</span>
-        </div>
-    </div>
+    <!-- Flight Results Section -->
+    <div id="flight-results"></div>
 
     <script src="script.js"></script>
 </body>
