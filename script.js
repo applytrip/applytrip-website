@@ -5,7 +5,6 @@ async function searchFlights() {
     const origin = document.getElementById("origin").value.toUpperCase();
     const destination = document.getElementById("destination").value.toUpperCase();
     const departureDate = document.getElementById("departure").value;
-    const travellers = document.getElementById("travellers").value;
 
     if (!origin || !destination || !departureDate) {
         alert("Please fill in all fields.");
@@ -18,7 +17,7 @@ async function searchFlights() {
         const response = await fetch(apiUrl);
         const data = await response.json();
 
-        if (data.data.length > 0) {
+        if (data.data && data.data.length > 0) {
             displayFlights(data.data);
         } else {
             document.getElementById("flight-results").innerHTML = "<p>No flights found.</p>";
@@ -32,7 +31,15 @@ async function searchFlights() {
 function displayFlights(flights) {
     let resultsHtml = "<h3>Available Flights</h3><ul>";
     flights.forEach(flight => {
-        resultsHtml += `<li>Flight: ${flight.origin} → ${flight.destination} | Price: ${flight.price} USD | Date: ${flight.departure_at}</li>`;
+        resultsHtml += `
+            <li>
+                Flight: ${flight.origin} → ${flight.destination} | 
+                Price: ${flight.price} USD | 
+                Date: ${flight.departure_at} |
+                <a href="https://www.aviasales.com/${flight.origin}${flight.destination}${flight.departure_at.replace(/-/g, "")}?marker=${PARTNER_ID}" target="_blank">
+                    Book Now
+                </a>
+            </li>`;
     });
     resultsHtml += "</ul>";
     document.getElementById("flight-results").innerHTML = resultsHtml;
