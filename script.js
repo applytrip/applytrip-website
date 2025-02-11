@@ -1,46 +1,48 @@
-const API_TOKEN = "774c580b39b6f5503afcbf57f2249aa2"; // Your API token
-const PARTNER_ID = "604751"; // Your Partner ID
+const API_KEY = "76128de6-9ad3-4c21-bc64-f4dc359b11c"; // Your Viator Production API Key
 
-async function searchFlights() {
-    const origin = document.getElementById("origin").value.toUpperCase();
-    const destination = document.getElementById("destination").value.toUpperCase();
-    const departureDate = document.getElementById("departure").value;
-
-    if (!origin || !destination || !departureDate) {
-        alert("Please fill in all fields.");
+async function searchTours() {
+    const destination = document.getElementById("destination").value;
+    
+    if (!destination) {
+        alert("Please enter a destination.");
         return;
     }
 
-    const apiUrl = `https://api.travelpayouts.com/aviasales/v3/prices_for_dates?origin=${origin}&destination=${destination}&departure_at=${departureDate}&token=${API_TOKEN}`;
+    const apiUrl = `https://api.viator.com/partner/v1/search?query=${destination}&topX=10`;
 
     try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+        const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "exp-api-key": API_KEY, // Viator API authentication
+            },
+        });
 
+        const data = await response.json();
+        
         if (data.data && data.data.length > 0) {
-            displayFlights(data.data);
+            displayTours(data.data);
         } else {
-            document.getElementById("flight-results").innerHTML = "<p>No flights found.</p>";
+            document.getElementById("tour-results").innerHTML = "<p>No tours found.</p>";
         }
     } catch (error) {
-        console.error("Error fetching flight data:", error);
-        alert("Failed to fetch flight data. Please try again later.");
+        console.error("Error fetching tours:", error);
+        alert("Failed to fetch tour data. Please try again later.");
     }
 }
 
-function displayFlights(flights) {
-    let resultsHtml = "<h3>Available Flights</h3><ul>";
-    flights.forEach(flight => {
+function displayTours(tours) {
+    let resultsHtml = "<h3>Available Tours</h3><ul>";
+    tours.forEach(tour => {
         resultsHtml += `
             <li>
-                Flight: ${flight.origin} → ${flight.destination} | 
-                Price: ${flight.price} USD | 
-                Date: ${flight.departure_at} |
-                <a href="https://www.aviasales.com/${flight.origin}${flight.destination}${flight.departure_at.replace(/-/g, "")}?marker=${PARTNER_ID}" target="_blank">
-                    Book Now
-                </a>
-            </li>`;
+                <strong>${tour.title}</strong>  
+                <br>Price: ${tour.price.formatted}
+                <br><a href="${tour.bookingURL}" target="_blank">Book Now</a>
+            </li>
+        `;
     });
     resultsHtml += "</ul>";
-    document.getElementById("flight-results").innerHTML = resultsHtml;
+    document.getElementById("tour-results").innerHTML = resultsHtml;
 }
