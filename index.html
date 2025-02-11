@@ -1,199 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApplyTrip - Travel Search</title>
+<script>
+    const AVIASALES_AFFILIATE_LINK = "https://aviasales.tp.st/lmw9wqFA"; 
+    const VIATOR_API_KEY = "YOUR_PRODUCTION_API_KEY"; // Replace with your actual production key
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+    function redirectToAffiliate() {
+        const origin = document.getElementById("origin").value.toUpperCase();
+        const destination = document.getElementById("destination").value.toUpperCase();
+        const departureDate = document.getElementById("departure").value;
+        
+        if (!origin || !destination || !departureDate) {
+            alert("Please fill in all fields.");
+            return;
         }
 
-        .header {
-            background-color: #ff0000;
-            padding: 15px;
-            color: white;
-            text-align: center;
+        const searchUrl = `${AVIASALES_AFFILIATE_LINK}?origin=${origin}&destination=${destination}&depart_date=${departureDate}`;
+        window.location.href = searchUrl;
+    }
+
+    async function searchTours() {
+        const destination = document.getElementById("destination").value.trim();
+        
+        if (!destination) {
+            alert("Please enter a destination.");
+            return;
         }
 
-        .nav-container {
-            display: flex;
-            justify-content: center;
-            padding: 15px;
-            background-color: #ffffff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        const apiUrl = `https://api.viator.com/partner/v1/search?query=${destination}&topX=5`;
 
-        .nav-item {
-            color: #333;
-            text-decoration: none;
-            padding: 10px 15px;
-            font-weight: bold;
-        }
-
-        .nav-item:hover {
-            color: #ff0000;
-        }
-
-        .search-container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .search-form {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .form-group {
-            position: relative;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .search-btn {
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            grid-column: span 2;
-        }
-
-        .search-btn:hover {
-            background-color: #cc0000;
-        }
-
-        #tour-results {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>ApplyTrip</h1>
-    </div>
-
-    <nav class="nav-container">
-        <a href="#" class="nav-item">Flights</a>
-        <a href="#" class="nav-item">Hotels</a>
-        <a href="#" class="nav-item">Holiday Packages</a>
-        <a href="#" class="nav-item">Trains</a>
-        <a href="#" class="nav-item">Buses</a>
-        <a href="#" class="nav-item">Cabs</a>
-        <a href="#" class="nav-item">Forex</a>
-        <a href="#" class="nav-item">Insurance</a>
-    </nav>
-
-    <div class="search-container">
-        <form class="search-form">
-            <div class="form-group">
-                <input type="text" id="origin" class="form-control" placeholder="From (e.g. BLR)">
-            </div>
-            <div class="form-group">
-                <input type="text" id="destination" class="form-control" placeholder="To (e.g. HYD)">
-            </div>
-            <div class="form-group">
-                <input type="date" id="departure" class="form-control">
-            </div>
-            <div class="form-group">
-                <input type="text" id="travellers" class="form-control" placeholder="Travellers & Class" value="1 Traveller, Economy">
-            </div>
-            <button type="button" class="search-btn" onclick="redirectToAffiliate()">Search Flights</button>
-            <button type="button" class="search-btn" onclick="searchTours()">Search Tours</button>
-        </form>
-    </div>
-
-    <!-- Tour Results Section -->
-    <div id="tour-results"></div>
-
-    <script>
-        const AVIASALES_AFFILIATE_LINK = "https://aviasales.tp.st/lmw9wqFA"; // Your Aviasales Link
-        const VIATOR_API_KEY = "76128de6-9ad3-4c21-bc64-f4dc359b11c"; // Viator API Key
-
-        function redirectToAffiliate() {
-            const origin = document.getElementById("origin").value.toUpperCase();
-            const destination = document.getElementById("destination").value.toUpperCase();
-            const departureDate = document.getElementById("departure").value;
-            
-            if (!origin || !destination || !departureDate) {
-                alert("Please fill in all fields.");
-                return;
-            }
-
-            const searchUrl = `${AVIASALES_AFFILIATE_LINK}?origin=${origin}&destination=${destination}&depart_date=${departureDate}`;
-            window.location.href = searchUrl;
-        }
-
-        async function searchTours() {
-            const destination = document.getElementById("destination").value;
-            
-            if (!destination) {
-                alert("Please enter a destination.");
-                return;
-            }
-
-            const apiUrl = `https://api.viator.com/partner/v1/search?query=${destination}&topX=5`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/json",
-                        "exp-api-key": VIATOR_API_KEY,
-                    },
-                });
-
-                const data = await response.json();
-                
-                if (data.data && data.data.length > 0) {
-                    displayTours(data.data);
-                } else {
-                    document.getElementById("tour-results").innerHTML = "<p>No tours found.</p>";
+        try {
+            const response = await fetch(apiUrl, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "exp-api-key": VIATOR_API_KEY
                 }
-            } catch (error) {
-                console.error("Error fetching tours:", error);
-                alert("Failed to fetch tour data. Please try again later.");
-            }
-        }
-
-        function displayTours(tours) {
-            let resultsHtml = "<h3>Available Tours</h3><ul>";
-            tours.forEach(tour => {
-                resultsHtml += `
-                    <li>
-                        <strong>${tour.title}</strong>  
-                        <br>Price: ${tour.price.formatted}
-                        <br><a href="${tour.bookingURL}" target="_blank">Book Now</a>
-                    </li>
-                `;
             });
-            resultsHtml += "</ul>";
-            document.getElementById("tour-results").innerHTML = resultsHtml;
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("API Response:", data);
+
+            if (data.data && data.data.length > 0) {
+                displayTours(data.data);
+            } else {
+                document.getElementById("tour-results").innerHTML = "<p>No tours found.</p>";
+            }
+        } catch (error) {
+            console.error("Error fetching tour data:", error);
+            alert("Failed to fetch tour data. Check API Key and Console Logs.");
         }
-    </script>
-</body>
-</html>
+    }
+
+    function displayTours(tours) {
+        let resultsHtml = "<h3>Available Tours</h3><ul>";
+        tours.forEach(tour => {
+            resultsHtml += `
+                <li>
+                    <strong>${tour.title}</strong>  
+                    <br>Price: ${tour.price.formatted}
+                    <br><a href="${tour.bookingURL}" target="_blank">Book Now</a>
+                </li>
+            `;
+        });
+        resultsHtml += "</ul>";
+        document.getElementById("tour-results").innerHTML = resultsHtml;
+    }
+</script>
