@@ -3,10 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApplyTrip - Flight & Tour Search</title>
+    <title>ApplyTrip - Travel Platform</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="header">
-        <
+        <h1>ApplyTrip</h1>
+    </div>
+
+    <nav class="nav-container">
+        <a href="#" class="nav-item">Flights</a>
+        <a href="#" class="nav-item">Hotels</a>
+        <a href="#" class="nav-item">Tours & Activities</a>
+    </nav>
+
+    <div class="search-container">
+        <form id="flight-search-form" class="search-form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="flight-from" placeholder="From" value="DEL, Delhi Airport India">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="flight-to" placeholder="To" value="BLR, Bengaluru International Airport">
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" id="flight-departure" placeholder="Departure">
+            </div>
+            <button type="submit" class="search-btn">SEARCH FLIGHTS</button>
+        </form>
+
+        <form id="hotel-search-form" class="search-form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="hotel-location" placeholder="Location">
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" id="hotel-checkin" placeholder="Check-in">
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" id="hotel-checkout" placeholder="Check-out">
+            </div>
+            <button type="submit" class="search-btn">SEARCH HOTELS</button>
+        </form>
+
+        <form id="tour-search-form" class="search-form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="tour-location" placeholder="Destination">
+            </div>
+            <button type="submit" class="search-btn">SEARCH TOURS</button>
+        </form>
+    </div>
+
+    <div class="results-container">
+        <h2>Search Results</h2>
+        <div id="flight-results"></div>
+        <div id="hotel-results"></div>
+        <div id="tour-results"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

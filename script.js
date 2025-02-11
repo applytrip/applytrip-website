@@ -1,81 +1,55 @@
+// API Keys
+const AVIA_SALES_API_KEY = '774c580b39b6f5503afcbf57f2249aa2';
+const VIATOR_API_KEY = '7540f4c2-cc22-4ce1-87d2-6d34585ceda8';
 
-const FLIGHT_API_KEY = "774c580b39b6f5503afcbf57f2249aa2"; // Travelpayouts API Token
-const TOUR_API_KEY = "76128de6-9ad3-4c21-bc64-f4dc359b111c"; // Viator API Key
+// Flight Search (Aviasales API)
+document.getElementById('flight-search-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const from = document.getElementById('flight-from').value;
+    const to = document.getElementById('flight-to').value;
+    const departure = document.getElementById('flight-departure').value;
 
-// Function to search flights
-async function searchFlights() {
-    const origin = document.getElementById("origin").value.toUpperCase();
-    const destination = document.getElementById("destination").value.toUpperCase();
-    const departureDate = document.getElementById("departure").value;
-
-    if (!origin || !destination || !departureDate) {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-    const apiUrl = `https://api.travelpayouts.com/aviasales/v3/prices_for_dates?origin=${origin}&destination=${destination}&departure_at=${departureDate}&currency=USD&token=${FLIGHT_API_KEY}`;
+    const url = `https://api.travelpayouts.com/v2/prices/latest?currency=usd&origin=${from}&destination=${to}&depart_date=${departure}&token=${AVIA_SALES_API_KEY}`;
 
     try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-
+        const response = await fetch(url);
         const data = await response.json();
-        if (data.data && data.data.length > 0) {
-            displayFlights(data.data);
-        } else {
-            document.getElementById("flight-results").innerHTML = "<p>No flights found.</p>";
-        }
+        document.getElementById('flight-results').innerHTML = JSON.stringify(data);
     } catch (error) {
-        console.error("Error fetching flight data:", error);
-        document.getElementById("flight-results").innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        console.error('Error fetching flight data:', error);
     }
-}
+});
 
-// Function to display flight results
-function displayFlights(flights) {
-    let resultsHtml = "<h3>Available Flights</h3><ul>";
-    flights.forEach(flight => {
-        resultsHtml += `
-            <li>
-                <strong>${flight.origin} → ${flight.destination}</strong>  
-                <br>Price: ${flight.price} USD
-                <br>Departure: ${new Date(flight.departure_at).toLocaleString()}
-            </li>
-        `;
-    });
-    resultsHtml += "</ul>";
-    document.getElementById("flight-results").innerHTML = resultsHtml;
-}
+// Hotel Search (Hotellook API)
+document.getElementById('hotel-search-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const location = document.getElementById('hotel-location').value;
+    const checkin = document.getElementById('hotel-checkin').value;
+    const checkout = document.getElementById('hotel-checkout').value;
 
-// Function to search tours
-async function searchTours() {
-    const destination = document.getElementById("tour-destination").value.trim();
-    if (!destination) {
-        alert("Please enter a destination.");
-        return;
-    }
-
-    const apiUrl = `https://api.viator.com/partner/v1/tours/search?query=${encodeURIComponent(destination)}&topX=10`;
+    const url = `https://engine.hotellook.com/api/v2/cache.json?location=${location}&checkIn=${checkin}&checkOut=${checkout}&token=${AVIA_SALES_API_KEY}`;
 
     try {
-        const response = await fetch(apiUrl, {
-            method: "GET",
-            headers: {
-                "Accept": "application/json",
-                "exp-api-key": TOUR_API_KEY
-            }
-        });
-
-        if (!response.ok) throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-
+        const response = await fetch(url);
         const data = await response.json();
-        if (data.data && data.data.length > 0) {
-            displayTours(data.data);
-        } else {
-            document.getElementById("tour-results").innerHTML = "<p>No tours found.</p>";
-        }
+        document.getElementById('hotel-results').innerHTML = JSON.stringify(data);
     } catch (error) {
-        console.error("Error fetching tours:", error);
-        document.getElementById("tour-results").innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        console.error('Error fetching hotel data:', error);
     }
-}
+});
+
+// Tour Search (Viator API)
+document.getElementById('tour-search-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const location = document.getElementById('tour-location').value;
+
+    const url = `https://api.viator.com/partner/products?destination=${location}&apiKey=${VIATOR_API_KEY}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        document.getElementById('tour-results').innerHTML = JSON.stringify(data);
+    } catch (error) {
+        console.error('Error fetching tour data:', error);
+    }
+});
