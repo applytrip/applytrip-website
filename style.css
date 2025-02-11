@@ -1,29 +1,77 @@
-/* Navigation Menu Styling */
-.nav-menu {
-    display: flex;
-    justify-content: space-around;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background-color: #ff0000;
     padding: 15px;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: white;
+    text-align: center;
 }
 
-.nav-menu li {
-    list-style: none;
+.nav-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 14px;
+    justify-content: center;
+    padding: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.nav-item {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
     font-weight: bold;
-    color: black;
+}
+
+.nav-item:hover {
+    color: #ff0000;
+}
+
+.search-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.search-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.search-btn {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    grid-column: span 2;
 }
 
-.nav-menu i {
-    font-size: 32px;
-    margin-bottom: 5px;
-    color: black;
+.search-btn:hover {
+    background-color: #cc0000;
 }
 
-.nav-menu li:hover i {
-    color: #007bff; /* Blue highlight on hover */
+#flight-results, #tour-results {
+    margin-top: 20px;
+    padding: 20px;
 }

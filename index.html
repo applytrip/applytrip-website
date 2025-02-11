@@ -1,70 +1,12 @@
-<script>
-    const AVIASALES_AFFILIATE_LINK = "https://aviasales.tp.st/lmw9wqFA"; 
-    const VIATOR_API_KEY = "YOUR_PRODUCTION_API_KEY"; // Replace with your actual production key
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApplyTrip - Flight & Tour Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    function redirectToAffiliate() {
-        const origin = document.getElementById("origin").value.toUpperCase();
-        const destination = document.getElementById("destination").value.toUpperCase();
-        const departureDate = document.getElementById("departure").value;
-        
-        if (!origin || !destination || !departureDate) {
-            alert("Please fill in all fields.");
-            return;
-        }
-
-        const searchUrl = `${AVIASALES_AFFILIATE_LINK}?origin=${origin}&destination=${destination}&depart_date=${departureDate}`;
-        window.location.href = searchUrl;
-    }
-
-    async function searchTours() {
-        const destination = document.getElementById("destination").value.trim();
-        
-        if (!destination) {
-            alert("Please enter a destination.");
-            return;
-        }
-
-        const apiUrl = `https://api.viator.com/partner/v1/search?query=${destination}&topX=5`;
-
-        try {
-            const response = await fetch(apiUrl, {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "exp-api-key": VIATOR_API_KEY
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log("API Response:", data);
-
-            if (data.data && data.data.length > 0) {
-                displayTours(data.data);
-            } else {
-                document.getElementById("tour-results").innerHTML = "<p>No tours found.</p>";
-            }
-        } catch (error) {
-            console.error("Error fetching tour data:", error);
-            alert("Failed to fetch tour data. Check API Key and Console Logs.");
-        }
-    }
-
-    function displayTours(tours) {
-        let resultsHtml = "<h3>Available Tours</h3><ul>";
-        tours.forEach(tour => {
-            resultsHtml += `
-                <li>
-                    <strong>${tour.title}</strong>  
-                    <br>Price: ${tour.price.formatted}
-                    <br><a href="${tour.bookingURL}" target="_blank">Book Now</a>
-                </li>
-            `;
-        });
-        resultsHtml += "</ul>";
-        document.getElementById("tour-results").innerHTML = resultsHtml;
-    }
-</script>
+    <div class="header">
+        <
